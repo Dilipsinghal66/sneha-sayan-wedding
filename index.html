@@ -16,6 +16,10 @@
   Google Maps link: https://maps.app.goo.gl/PpnskzthB2zNXiLa9?g_st=iw
   Families line: With love, the Mahapatra and Chowdhury families
   RSVP WhatsApp number with name: +91-9711980089  (Sayan)
+  Under the bride: (D/O- Mr. Sushil Kr. Mahapatra & Mrs. Meena Mahapatra)
+  Under the groom: (S/O - Mr. Sadhan Kr. Chowdhury & Late Mrs. Sathi Chowdhury)
+  Line between the couple and the countdown: In the auspicious presence of our families, we request the honour
+    and blessings of your presence  at our wedding ceremonies
 
   FUNCTIONS
   Sangeet | 28 Jan 2027 | Thursday | 6:00 PM  | Dream Garden Banquet & Guest House | Glitter & Glam
@@ -24,13 +28,15 @@
 
   PHOTOS: photo2.jpg, photo3.jpg, photo4.jpg (same folder as this file; the two solo photos were removed on request).
   HERO PAINTING: bg.webp (the couple's chosen watercolour), names written in its blank space.
-  MUSIC: music.m4a (from sneha2.mp4), starts when the guest taps the seal; music button bottom-right.
+  MUSIC: music.m4a (from snehafinalsong.mp4), starts when the guest taps the seal; music button bottom-right.
   AVATARS: bride.jpg + groom.jpg (the couple's chosen illustrations).
   ARCH PICTURE: little-couple.jpg (in the gold arch above the footer).
   EXTRAS: Shubho Drishti betel-leaf reveal on the portraits, ink-written names, lake shimmer,
           flip countdown, tap-for-blessings flower shower, Share Invitation button,
           scratch-to-reveal date, light-a-diya row, event card surprises, floating lake diyas,
-          fireworks (released together with the wish lanterns).
+          fireworks (released together with the wish lanterns), wishes wall.
+  WISHES WALL: guests' wishes are saved in the couple's Google Sheet through WISHES_API
+          (see wishes-apps-script.gs). Delete a row, or type hide in column D, to remove a wish.
 =====================================================================
 -->
 <html lang="en">
@@ -202,6 +208,13 @@ h1,h2,h3,p{margin:0}
 .person .label{margin-top:12px;font:600 14px/1.4 var(--f-head);letter-spacing:.28em;text-transform:uppercase;color:var(--gold-deep)}
 .pname{font:400 clamp(40px,10.5vw,50px)/1.2 var(--f-names);color:var(--red)}
 .couple-amp{font:400 64px/1 var(--f-names);color:var(--gold)}
+.parents span{white-space:nowrap}
+.parents{margin:4px auto 0;max-width:320px;font:italic 500 18px/1.45 var(--f-body);color:#6B5444}
+/* invitation line between the couple and the countdown */
+.invite-line{max-width:620px;margin:36px auto 0;padding:0 var(--gutter-r) 0 var(--gutter);text-align:center}
+.invite-line p{font:italic 500 clamp(21px,5.6vw,27px)/1.5 var(--f-body);color:var(--red-deep)}
+.invite-line .fdiv{display:block;margin:0 auto 10px}
+.invite-line .fdiv + p + .fdiv{margin:12px auto 0;transform:scaleY(-1)}
 
 /* =================================================================
    7. COUNTDOWN
@@ -303,6 +316,28 @@ h1,h2,h3,p{margin:0}
 .foot-actions{display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:28px}
 .rsvp-who{font-size:18px;color:#6B5444}
 
+/* Wishes wall */
+.wishes{max-width:620px;margin:0 auto;display:grid;gap:16px}
+.wish{position:relative;margin:0;background:#fff;border:1px solid rgba(184,146,74,.45);border-radius:14px;padding:18px 20px 16px;box-shadow:0 10px 22px rgba(110,80,40,.07)}
+.wish::before{content:"\201C";position:absolute;left:12px;top:-14px;font:400 54px/1 var(--f-names);color:var(--gold)}
+.wish blockquote{margin:0;font:italic 500 20px/1.5 var(--f-body);color:var(--ink);overflow-wrap:anywhere;white-space:pre-line}
+.wish figcaption{margin-top:8px;font:600 18px/1.4 var(--f-body);letter-spacing:.02em;color:var(--gold-deep);overflow-wrap:anywhere}
+.wish.new{animation:wishIn .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes wishIn{from{opacity:0;transform:translateY(14px) scale(.97)}to{opacity:1;transform:none}}
+.wish-empty{text-align:center;font:italic 500 20px/1.5 var(--f-body);color:#6B5444}
+.wish-more{display:flex;margin:4px auto 0}
+.wish-more[hidden]{display:none}
+.wish-form{max-width:620px;margin:28px auto 0;display:grid;gap:12px}
+.wish-form label{font:600 14px/1.4 var(--f-head);letter-spacing:.2em;text-transform:uppercase;color:var(--gold-deep)}
+.wish-form input,.wish-form textarea{width:100%;box-sizing:border-box;min-height:48px;padding:12px 16px;border:1px solid rgba(184,146,74,.7);border-radius:12px;background:#fff;
+  font:500 18px/1.4 var(--f-body);color:var(--ink);-webkit-appearance:none;appearance:none}
+.wish-form textarea{min-height:112px;resize:vertical}
+.wish-form input:focus,.wish-form textarea:focus{outline:2px solid var(--gold);outline-offset:1px;border-color:var(--gold)}
+.wish-form ::placeholder{color:#9C8878;opacity:1}
+.wish-form .btn{width:100%;justify-content:center}
+.wish-form .btn[disabled]{opacity:.6;cursor:default;transform:none}
+.wish-note{min-height:1.4em;text-align:center;font:italic 500 18px/1.4 var(--f-body);color:var(--red-deep)}
+
 /* Music toggle (floating, bottom-right) */
 .music{position:fixed;right:max(14px,env(safe-area-inset-right));bottom:max(14px,env(safe-area-inset-bottom));z-index:80;width:52px;height:52px;border-radius:50%;
   border:1px solid var(--gold);background:rgba(252,248,240,.95);color:var(--red);display:none;place-items:center;cursor:pointer;box-shadow:0 8px 22px rgba(110,80,40,.22)}
@@ -320,13 +355,15 @@ h1,h2,h3,p{margin:0}
    ================================================================= */
 /* Shubho Drishti: two betel leaves part to reveal each face */
 .portrait{position:relative;cursor:pointer;-webkit-tap-highlight-color:transparent}
-.paan{position:absolute;left:50%;top:24%;width:30%;z-index:2;pointer-events:none;will-change:transform;
-  transition:transform 1.5s cubic-bezier(.55,0,.2,1);filter:drop-shadow(0 6px 8px rgba(40,60,20,.28))}
+.paan{position:absolute;left:50%;top:24%;width:30%;z-index:2;pointer-events:none;will-change:transform,opacity;
+  transition:transform 1.5s cubic-bezier(.55,0,.2,1),opacity .3s ease;filter:drop-shadow(0 6px 8px rgba(40,60,20,.28))}
 .paan svg{display:block;width:100%;height:auto}
 .paan--l{transform:translateX(-93%) rotate(171deg)}
 .paan--r{transform:translateX(-7%) scaleX(-1) rotate(171deg)}
-.portrait.drishti .paan--l{transform:translateX(-178%) translateY(48%) rotate(150deg)}
-.portrait.drishti .paan--r{transform:translateX(78%) translateY(48%) scaleX(-1) rotate(150deg)}
+/* after parting, the leaves slide off the photo and fade away so nothing covers the faces */
+.portrait.drishti .paan{opacity:0;transition:transform 1.5s cubic-bezier(.55,0,.2,1),opacity .6s ease .75s}
+.portrait.drishti .paan--l{transform:translateX(-200%) translateY(40%) rotate(150deg)}
+.portrait.drishti .paan--r{transform:translateX(100%) translateY(40%) scaleX(-1) rotate(150deg)}
 /* names written in ink */
 @keyframes ink{from{clip-path:inset(-30% 100% -30% -6%)}to{clip-path:inset(-30% -6% -30% -6%)}}
 #heroNames.in > span:first-child{animation:ink 1.5s cubic-bezier(.45,.05,.3,1) .15s both}
@@ -678,7 +715,7 @@ h1,h2,h3,p{margin:0}
             <path d="M12 286V122A108 108 0 0 1 228 122V286Z" fill="#FCF8F0"/>
             <g clip-path="url(#clipB)">
               <rect width="240" height="290" fill="#EFE8DE"/>
-              <image href="bride.jpg" x="-30" y="-4" width="300" height="600" preserveAspectRatio="xMidYMin meet"/>
+              <image href="bride.jpg" x="-20" y="-4" width="300" height="600" preserveAspectRatio="xMidYMin meet"/>
             </g>
             <path d="M14 284V122A106 106 0 0 1 226 122V284" class="gs-o"/><path d="M14 284V122A106 106 0 0 1 226 122V284" class="gs-y"/><path d="M14 284V122A106 106 0 0 1 226 122V284" class="gs-c"/>
             <path d="M14 284H226" stroke="#B8924A" stroke-width="1.6"/>
@@ -688,6 +725,7 @@ h1,h2,h3,p{margin:0}
         </div>
         <p class="label">The Bride</p>
         <h3 class="pname">Sneha Mahapatra</h3>
+        <p class="parents">(D/O- <span>Mr. Sushil Kr. Mahapatra</span> &amp; <span>Mrs. Meena Mahapatra)</span></p>
       </article>
       <div class="couple-amp reveal" aria-hidden="true">&amp;</div>
       <article class="person reveal">
@@ -707,10 +745,18 @@ h1,h2,h3,p{margin:0}
         </div>
         <p class="label">The Groom</p>
         <h3 class="pname">Sayan Chowdhury</h3>
+        <p class="parents">(S/O - <span>Mr. Sadhan Kr. Chowdhury</span> &amp; <span>Late Mrs. Sathi Chowdhury)</span></p>
       </article>
     </div>
   </div>
 </section>
+
+<!-- Invitation line between the couple and the countdown -->
+<div class="invite-line reveal">
+  <svg class="fdiv" viewBox="0 0 210 30" aria-hidden="true"><use href="#fdiv"/></svg>
+  <p>In the auspicious presence of our families, we request the honour and blessings of your presence at our wedding ceremonies</p>
+  <svg class="fdiv" viewBox="0 0 210 30" aria-hidden="true"><use href="#fdiv"/></svg>
+</div>
 
 <!-- =================================================================
      COUNTDOWN (fixed +05:30 IST)
@@ -909,6 +955,35 @@ h1,h2,h3,p{margin:0}
       <svg class="fdiv reveal" viewBox="0 0 210 30" aria-hidden="true"><use href="#fdiv"/></svg>
     </div>
     <div class="album" id="albumGrid"></div>
+  </div>
+</section>
+
+<!-- =================================================================
+     WISHES WALL (wishes saved in the couple's Google Sheet, see WISHES_API)
+     ================================================================= -->
+<section class="sec" id="wishes" aria-labelledby="wsTitle">
+  <div class="panel">
+    <svg class="cap" aria-hidden="true"><use href="#cap"/></svg>
+    <svg class="flor flor--l" viewBox="0 0 80 80" aria-hidden="true"><use href="#flor"/></svg>
+    <svg class="flor flor--r" viewBox="0 0 80 80" aria-hidden="true"><use href="#flor"/></svg>
+    <div class="sec-head">
+      <p class="eyebrow reveal">Your Blessings</p>
+      <h2 class="title reveal" id="wsTitle">Wishes Wall</h2>
+      <svg class="fdiv reveal" viewBox="0 0 210 30" aria-hidden="true"><use href="#fdiv"/></svg>
+    </div>
+    <div class="wishes" id="wishList" aria-live="polite"></div>
+    <button class="btn btn--light wish-more" type="button" id="wishMore" hidden>Show all wishes</button>
+    <form class="wish-form reveal" id="wishForm" novalidate>
+      <label for="wishName">Your name</label>
+      <input id="wishName" name="name" type="text" maxlength="40" autocomplete="name" placeholder="Your name" required>
+      <label for="wishText">Your wish</label>
+      <textarea id="wishText" name="wish" maxlength="300" rows="4" placeholder="Leave a wish for the couple" required></textarea>
+      <button class="btn" type="submit" id="wishBtn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.2 4.2 0 0 1 12 7.6a4.2 4.2 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2z"/></svg>
+        <span id="wishBtnLabel">Leave a Wish</span>
+      </button>
+      <p class="wish-note" id="wishNote" role="status"></p>
+    </form>
   </div>
 </section>
 </main>
@@ -1681,6 +1756,71 @@ $("shareBtn").addEventListener("click", function(){
 /* ==================================================================
    13. START (after the envelope opens)
    ================================================================== */
+/* ================= WISHES WALL =================
+   WISHES_API: the web-app URL of the Google Apps Script in wishes-apps-script.gs.
+   Empty = preview mode: wishes are kept only in this browser. */
+var WISHES_API = "https://script.google.com/macros/s/AKfycbzY4CtPuUnSLg3E86lz2KsgpbG-X-eft0G-lISxZbnGCVPj3q1e0KNBvUSJGyxKLgv60Q/exec";
+(function(){
+  var list = $("wishList"), form = $("wishForm"), nameIn = $("wishName"), textIn = $("wishText"),
+      btn = $("wishBtn"), label = $("wishBtnLabel"), note = $("wishNote"), more = $("wishMore");
+  var LOCAL_KEY = "ss-wishes", SHOW = 6, all = [], expanded = false;
+  function card(w, isNew){
+    var f = document.createElement("figure"); f.className = "wish" + (isNew ? " new" : "");
+    var q = document.createElement("blockquote"); q.textContent = w.wish;
+    var c = document.createElement("figcaption"); c.textContent = "\u2014 " + w.name;
+    f.appendChild(q); f.appendChild(c); return f;
+  }
+  function render(){
+    list.textContent = "";
+    if (!all.length){
+      var e = document.createElement("p"); e.className = "wish-empty"; e.textContent = "Be the first to leave a wish for the couple.";
+      list.appendChild(e); more.hidden = true; return;
+    }
+    var shown = expanded ? all : all.slice(0, SHOW);
+    shown.forEach(function(w){ list.appendChild(card(w, false)); });
+    more.hidden = expanded || all.length <= SHOW;
+  }
+  function clean(arr){
+    return (Array.isArray(arr) ? arr : []).filter(function(w){ return w && w.name && w.wish; })
+      .map(function(w){ return {name: String(w.name).slice(0, 40), wish: String(w.wish).slice(0, 300), t: +w.t || 0}; })
+      .sort(function(a, b){ return b.t - a.t; });
+  }
+  function readLocal(){ try { return JSON.parse(localStorage.getItem(LOCAL_KEY) || "[]"); } catch (e) { return []; } }
+  function load(){
+    if (!WISHES_API){ all = clean(readLocal()); render(); return; }
+    fetch(WISHES_API + "?t=" + Date.now()).then(function(r){ return r.json(); })
+      .then(function(d){ all = clean(d && d.wishes); render(); })
+      .catch(function(){ all = []; render(); });
+  }
+  more.addEventListener("click", function(){ expanded = true; render(); });
+  form.addEventListener("submit", function(ev){
+    ev.preventDefault();
+    var n = nameIn.value.trim().replace(/\s+/g, " "), w = textIn.value.trim();
+    if (!n){ note.textContent = "Please write your name."; nameIn.focus(); return; }
+    if (!w){ note.textContent = "Please write a wish."; textIn.focus(); return; }
+    var item = {name: n.slice(0, 40), wish: w.slice(0, 300), t: Date.now()};
+    btn.disabled = true; label.textContent = "Sending\u2026"; note.textContent = "";
+    var send = WISHES_API
+      ? fetch(WISHES_API, {method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body: JSON.stringify({name:item.name, wish:item.wish})})
+          .then(function(r){ return r.json(); }).then(function(d){ if (!d || !d.ok) throw new Error("not saved"); })
+      : new Promise(function(res){ try { var a = readLocal(); a.push(item); localStorage.setItem(LOCAL_KEY, JSON.stringify(a)); } catch (e) {} res(); });
+    send.then(function(){
+      all.unshift(item);
+      var empty = list.querySelector(".wish-empty"); if (empty) empty.remove();
+      var el = card(item, true); list.insertBefore(el, list.firstChild);
+      if (!expanded && list.children.length > SHOW){ list.lastChild.remove(); more.hidden = false; }
+      textIn.value = ""; note.textContent = "Thank you! Your wish is on the wall.";
+      var c = centerOf(el); shower(c[0], c[1], ["rose", "jasmine", "gold"], 16, "burst");
+    }).catch(function(){
+      note.textContent = "Sorry, the wish could not be sent. Please try again.";
+    }).then(function(){ btn.disabled = false; label.textContent = "Leave a Wish"; });
+  });
+  var wio = "IntersectionObserver" in window ? new IntersectionObserver(function(en){
+    if (en[0].isIntersecting){ wio.disconnect(); load(); }
+  }, {rootMargin:"600px 0px"}) : null;
+  if (wio) wio.observe($("wishes")); else load();
+})();
+
 function startEffects(){
   startReveal();
   buildPath();
