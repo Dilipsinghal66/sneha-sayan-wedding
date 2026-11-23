@@ -272,7 +272,7 @@ h1,h2,h3,p{margin:0}
    10. PHOTO ALBUM + LIGHTBOX (gold arch frames with jasmine garland)
    ================================================================= */
 .album{display:flex;flex-wrap:wrap;justify-content:center;gap:16px 12px}
-.ph{position:relative;flex:0 0 calc(50% - 6px);max-width:300px;aspect-ratio:4/5;padding:0;border:0;background:none;cursor:zoom-in;transition:transform .4s var(--ease)}
+.ph{position:relative;flex:0 0 calc(50% - 6px);max-width:300px;aspect-ratio:3/4;padding:0;border:0;background:none;cursor:zoom-in;transition:transform .4s var(--ease)}
 .ph .pic{position:absolute;inset:7%;border-radius:999px 999px 4px 4px;overflow:hidden;background:var(--wash)}
 .ph img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
 .ph .fr{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
@@ -397,7 +397,7 @@ h1,h2,h3,p{margin:0}
 .diya-label{font:600 14px/1.4 var(--f-head);letter-spacing:.26em;text-transform:uppercase;color:var(--gold-deep)}
 .diya-row{display:flex;gap:4px;justify-content:center;padding:8px 14px;border-radius:999px;transition:box-shadow 1.2s ease,background-color 1.2s ease}
 .diya-row.all{background:rgba(255,236,190,.45);box-shadow:0 0 44px 10px rgba(255,210,130,.5)}
-.dy{width:76px;height:82px;padding:0;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .3s}
+.dy{width:66px;height:72px;padding:0;border:0;background:none;cursor:pointer;-webkit-tap-highlight-color:transparent;transition:transform .3s}
 .dy:hover{transform:translateY(-2px)}
 .dy svg{width:100%;height:100%;display:block;overflow:visible}
 .dy .fl{opacity:0;transform:scale(.3);transform-origin:24px 26px;transition:opacity .5s,transform .6s cubic-bezier(.2,.8,.3,1.4)}
@@ -1247,9 +1247,9 @@ $("addCal").addEventListener("click", function(){
 /* ==================================================================
    5. PHOTO ALBUM (arch frames with jasmine garland) + LIGHTBOX
    ================================================================== */
-var FRAME = '<svg class="fr" viewBox="0 0 200 250" aria-hidden="true">'
-  + '<path d="M8 246V100A92 92 0 0 1 192 100V246Z" fill="none" stroke="#FFFDF8" stroke-width="10"/>'
-  + '<path d="M8 246V100A92 92 0 0 1 192 100V246Z" class="gs-o"/><path d="M8 246V100A92 92 0 0 1 192 100V246Z" class="gs-y"/><path d="M8 246V100A92 92 0 0 1 192 100V246Z" class="gs-c"/>'
+var FRAME = '<svg class="fr" viewBox="0 0 200 267" aria-hidden="true">'
+  + '<path d="M8 263V100A92 92 0 0 1 192 100V263Z" fill="none" stroke="#FFFDF8" stroke-width="10"/>'
+  + '<path d="M8 263V100A92 92 0 0 1 192 100V263Z" class="gs-o"/><path d="M8 263V100A92 92 0 0 1 192 100V263Z" class="gs-y"/><path d="M8 263V100A92 92 0 0 1 192 100V263Z" class="gs-c"/>'
   + '<use href="#flor" x="-14" y="-6" width="58" height="58"/></svg>';
 var grid = $("albumGrid"), tiles = [];
 PHOTOS.forEach(function(p, i){
@@ -1608,15 +1608,15 @@ var LAMP = '<svg viewBox="0 0 48 52" aria-hidden="true">'
   + '<path d="M18 44L16 48H32L30 44" fill="#8E4A28"/></svg>';
 (function(){
   var row = $("diyaRow"), lit = 0;
-  for (var i = 0; i < 1; i++){
+  for (var i = 0; i < 3; i++){
     var b = document.createElement("button");
-    b.type = "button"; b.className = "dy"; b.setAttribute("aria-pressed", "false"); b.setAttribute("aria-label", "Light the diya");
+    b.type = "button"; b.className = "dy"; b.setAttribute("aria-pressed", "false"); b.setAttribute("aria-label", "Light diya " + (i + 1));
     b.innerHTML = LAMP;
     b.addEventListener("click", function(){
       if (this.classList.contains("lit")) return;
       this.classList.add("lit"); this.setAttribute("aria-pressed", "true");
       var c = centerOf(this); shower(c[0], c[1] - 14, ["gold"], 6, "rise");
-      if (++lit === 1){ row.classList.add("all"); var rc = centerOf(row); shower(rc[0], rc[1], ["gold", "jasmine", "gold", "rose"], 34, "burst"); }
+      if (++lit === 3){ row.classList.add("all"); var rc = centerOf(row); shower(rc[0], rc[1], ["gold", "jasmine", "gold", "rose"], 34, "burst"); }
     });
     row.appendChild(b);
   }
